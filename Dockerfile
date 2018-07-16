@@ -13,11 +13,13 @@ RUN curl -L https://github.com/bcpierce00/unison/archive/v$UNISON_VERSION.tar.gz
     cp src/unison src/unison-fsmonitor /usr/local/bin
 
 COPY unison.conf /.unison/default.prf
+RUN echo fs.inotify.max_user_watches=524288 | tee -a /etc/sysctl.conf
 
 FROM scratch
 
 COPY --from=builder /usr/local/bin/unison /unison
 COPY --from=builder /usr/local/bin/unison-fsmonitor /unison-fsmonitor
+COPY --from=builder /etc/sysctl.conf /etc/sysctl.conf
 
 COPY unison.conf /.unison/default.prf
 
