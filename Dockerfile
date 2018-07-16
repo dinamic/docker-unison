@@ -2,10 +2,6 @@ FROM alpine:3.6 as builder
 
 MAINTAINER Nikola Petkanski <nikola@petkanski.com
 
-# Alpine doesn't ship with Bash.
-# RUN apk add bash --update
-
-# Install Unison from source with inotify support + remove compilation tools
 RUN apk add --update --virtual .build-dependencies build-base curl && \
     apk add inotify-tools ocaml
 
